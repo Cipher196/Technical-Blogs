@@ -1,0 +1,9 @@
+baseURL: "https://Cipher196.github.io/Technical-Blogs/"
+languageCode: "en-us"
+title: "Technical Blogs"
+theme: "PaperMod"
+
+params:
+  homeInfoParams:
+    Title: "Technical Blogs"
+    Content: "Math, Computing, Programming, and Engineering"

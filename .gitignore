@@ -1,0 +1,16 @@
+# Hugo build output not used for deployment
+public/
+
+# Hugo cache
+resources/_gen/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+
+# Neovim/Vim
+*.swp
+*.swo
+
+# VS Code
+.vscode/
