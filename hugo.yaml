@@ -1,9 +1,9 @@
 baseURL: "https://Cipher196.github.io/Technical-Blogs/"
-languageCode: "en-us"
+local: "en-us"
 title: "Technical Blogs"
 theme: "PaperMod"
 
 params:
   homeInfoParams:
-    Title: "Technical Blogs"
-    Content: "Math, Computing, Programming, and Engineering"
+    Title: "Ahshan Khan"
+    Content: "Hey! I am currently doing B.Tech. in Math and Computing."
