@@ -2,6 +2,7 @@ baseURL: "https://Cipher196.github.io/Technical-Blogs/"
 local: "en-us"
 title: "Technical Blogs"
 theme: "PaperMod"
+publishDir: "docs"
 
 params:
   homeInfoParams:

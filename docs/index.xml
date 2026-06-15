@@ -5,16 +5,25 @@
     <link>https://Cipher196.github.io/Technical-Blogs/</link>
     <description>Recent content on Technical Blogs</description>
     <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 12:49:56 +0530</lastBuildDate>
+    <language>en</language>
+    <lastBuildDate>Mon, 15 Jun 2026 15:35:36 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Hello World</title>
-      <link>https://Cipher196.github.io/Technical-Blogs/posts/hello-world/</link>
-      <pubDate>Mon, 15 Jun 2026 12:49:56 +0530</pubDate>
-      <guid>https://Cipher196.github.io/Technical-Blogs/posts/hello-world/</guid>
-      <description>&lt;p&gt;$ Hello World&lt;/p&gt;
-&lt;p&gt;This is my first post&lt;/p&gt;</description>
+      <title>My First Post</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/my-first-post/</link>
+      <pubDate>Mon, 15 Jun 2026 15:35:36 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/my-first-post/</guid>
+      <description>&lt;h2 id=&#34;about-me&#34;&gt;About Me&lt;/h2&gt;
+&lt;p&gt;I am Ahshan Khan, currently doing my B.Tech in MnC at IIT Jammu. I am interested in math, programming, chess, and anime. I am starting this technical blog to write about my projects and document my journey of building them.&lt;/p&gt;
+&lt;h2 id=&#34;tech-stack&#34;&gt;Tech Stack&lt;/h2&gt;
+&lt;p&gt;I know C, C++, Python, HTML, CSS, JS, Flask, Hugo, Godot, and GDScript.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;DSA:&lt;/strong&gt; I use C++ for solving problems.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Web Dev:&lt;/strong&gt; I learned basic full-stack development using Flask.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Game Dev:&lt;/strong&gt; I have experimented with Godot and GDScript.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;projects&#34;&gt;Projects&lt;/h2&gt;
+&lt;p&gt;Now, I am moving ahead to build some rigorous projects to learn new things. Stay tuned for updates!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
