@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>BigInt in C&#43;&#43;: Representation and Addition | Technical Blogs</title>
+<meta name="keywords" content="">
+<meta name="description" content="What is BigInt?
+Have you used C&#43;&#43;? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.
+So, what is the solution?
+We can use a vector in C&#43;&#43;. If we use vector&lt;uint64_t&gt;, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.">
+<meta name="author" content="">
+<link rel="canonical" href="https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/">
+<link crossorigin="anonymous" href="/Technical-Blogs/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://Cipher196.github.io/Technical-Blogs/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Cipher196.github.io/Technical-Blogs/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Cipher196.github.io/Technical-Blogs/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://Cipher196.github.io/Technical-Blogs/apple-touch-icon.png">
+<link rel="mask-icon" href="https://Cipher196.github.io/Technical-Blogs/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/">
+  <meta property="og:site_name" content="Technical Blogs">
+  <meta property="og:title" content="BigInt in C&#43;&#43;: Representation and Addition">
+  <meta property="og:description" content="What is BigInt? Have you used C&#43;&#43;? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.
+So, what is the solution?
+We can use a vector in C&#43;&#43;. If we use vector&lt;uint64_t&gt;, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-18T11:21:37+05:30">
+    <meta property="article:modified_time" content="2026-06-18T11:21:37+05:30">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BigInt in C&#43;&#43;: Representation and Addition">
+  <meta name="twitter:description" content="What is BigInt? Have you used C&#43;&#43;? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.
+So, what is the solution?
+We can use a vector in C&#43;&#43;. If we use vector&lt;uint64_t&gt;, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "BigInt in C++: Representation and Addition",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "BigInt in C++: Representation and Addition",
+  "name": "BigInt in C\u002b\u002b: Representation and Addition",
+  "description": "What is BigInt? Have you used C++? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.\nSo, what is the solution?\nWe can use a vector in C++. If we use vector\u0026lt;uint64_t\u0026gt;, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "What is BigInt? Have you used C++? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.\nSo, what is the solution?\nWe can use a vector in C++. If we use vector, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.\nIn mathematics, if A is our BigInt and b is our base 2^64 (the range of values that uint64_t can store is from 0 to 2^64 - 1), then:\nA = v[0] + v[1]*b + v[2]*(b^2) + ... Now the question is: how do we implement this in C++?\nImplementing BigInt The first problem we have to tackle is how to store negative integers. Since we are using unsigned integers (uint64_t) inside our vector, we cannot store the sign inside the vector itself. Therefore, we need to store it separately.\nThe solution is to create a class for our BigInt:\nclass bigint { private: bool isPositive; vector\u003cuint64_t\u003e digits; // And other code goes here ... }; Note that we use a bool to store the sign since there are only two possible values: + and -.\nImplementing Addition I am using the book “Modern Computer Arithmetic” by Richard P. Brent and Paul Zimmermann to learn how computers handle BigInts, and I will implement their algorithms.\nInput:\nA = va[0] + va[1]*b + va[2]*(b^2) + ... B = vb[0] + vb[1]*b + vb[2]*(b^2) + ... Output:\nC = vc[0] + vc[1]*b + vc[2]*(b^2) + ... Algo:\nd = 0 s = a[0] + b[0] c[0] = s mod b d = s / b for i: 1 -\u003e n-1 s = a[i] + b[i] + d c[i] = s mod b d = s / b return c Note that d = s / b, and d cannot be greater than 1, as the maximum value that s can attain is:\n2*(2^64 - 1) + 1 = 2^65 - 1 Therefore, the carry can only be 0 or 1.\nCode my_std.h // my_std.h #pragma once // Prevents this file from being included multiple times #include #include #include #include #include #include // Explicitly bring only what you need into the global space of whoever includes this using std::cout; using std::cin; using std::endl; using std::vector; using std::string; This is becouse i dont want to include everthing every time.\nbigint.hpp #pragma once #include \"my_std.h\" class bigint { private: bool isPositive = true; // we are user base = uint64_t ( 2^64 ) vector digits; // A = digit[0] + digit[1]*base^1 + .... void multiply_add(uint64_t scalar, uint64_t add_value) { unsigned __int128 carry = add_value; for (size_t i = 0; i \u003c digits.size(); i++) { unsigned __int128 curr = (unsigned __int128)digits[i] * scalar + carry; digits[i] = (uint64_t)curr; carry = curr \u003e\u003e 64; } while (carry \u003e 0) { digits.push_back((uint64_t)carry); carry \u003e\u003e= 64; } } uint64_t divide_scalar(uint64_t divisor) { unsigned __int128 carry = 0; for (long long i = digits.size() - 1; i \u003e= 0; --i) { unsigned __int128 curr = (carry \u003c\u003c 64) | digits[i]; digits[i] = (uint64_t)(curr / divisor); carry = curr % divisor; } while (digits.size() \u003e 1 \u0026\u0026 digits.back() == 0) { digits.pop_back(); } return (uint64_t)carry; } void zero_check() { if (digits.empty() || (digits.size() == 1 \u0026\u0026 digits[0] == 0)) { digits = {0}; isPositive = true; } } public: bool ip() const { return isPositive; } void flipSign() { isPositive=!isPositive; } const vector\u0026 get_digits() const { return digits;} vector\u0026 get_digit() { return digits;} bigint(long long val = 0) { if (val \u003c 0) { isPositive = false; val = -val; } else { isPositive = true; } digits.push_back((uint64_t)val); zero_check(); } bigint(const std::string \u0026s) { from_string(s); } void from_string(const string \u0026s) { digits.clear(); isPositive = true; if (s.empty()) return; size_t start = 0; if (s[0] == '-') { isPositive = false; start = 1; } else if (s[0] == '+') { start = 1; } digits.push_back(0); for (size_t i = start; i \u003c s.length(); i++) { if (s[i] \u003c '0' || s[i] \u003e '9') continue; uint64_t digit_val = s[i] - '0'; multiply_add(10, digit_val); } zero_check(); } string to_string() const { if (digits.empty() || (digits.size() == 1 \u0026\u0026 digits[0] == 0)) { return \"0\"; } bigint temp = *this; string result = \"\"; while (!(temp.digits.size() == 1 \u0026\u0026 temp.digits[0] == 0)) { uint64_t remainder = temp.divide_scalar(10); result += std::to_string(remainder); } if (!isPositive) { result += \"-\"; } reverse(result.begin(), result.end()); return result; } }; arithmetic.hpp #pragma once #include \"bigint.hpp\" inline bigint bigint_add(const bigint \u0026a, const bigint \u0026b) { bigint c(0); unsigned __int128 s = a.get_digits()[0] + b.get_digits()[0]; c.get_digit()[0] = (uint64_t)s; uint64_t d = (uint64_t)(s \u003e\u003e 64); for (size_t i = 0; i \u003c b.get_digits().size(); i++) { s = a.get_digits()[i] + b.get_digits()[i] + d; d = (uint64_t)(s \u003e\u003e 64); c.get_digit().push_back((uint64_t)s); } for (size_t i = b.get_digits().size(); i \u003c a.get_digits().size(); i++) { s = a.get_digits()[i] + d; d = (uint64_t)(s \u003e\u003e 64); c.get_digit().push_back((uint64_t)s); } if (d) c.get_digit().push_back(d); return c; } inline bigint add(const bigint \u0026a, const bigint \u0026b) { bigint ans; if (a.ip() \u0026\u0026 b.ip()) { if (a.get_digits().size() \u003e= b.get_digits().size()) { ans = bigint_add(a, b); } else { ans = bigint_add(b, a); } return ans; } else if (!a.ip() \u0026\u0026 !b.ip()) { if (a.get_digits().size() \u003e= b.get_digits().size()) { ans = bigint_add(a, b); } else { ans = bigint_add(b, a); } ans.flipSign(); return ans; } else { // TODO: Implement substract functionality return ans; } } ",
+  "wordCount" : "936",
+  "inLanguage": "en",
+  "datePublished": "2026-06-18T11:21:37+05:30",
+  "dateModified": "2026-06-18T11:21:37+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Technical Blogs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Cipher196.github.io/Technical-Blogs/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://Cipher196.github.io/Technical-Blogs/" accesskey="h" title="Technical Blogs (Alt + H)">Technical Blogs</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      BigInt in C&#43;&#43;: Representation and Addition
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-18 11:21:37 +0530 IST'>June 18, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="what-is-bigint">What is BigInt?<a hidden class="anchor" aria-hidden="true" href="#what-is-bigint">#</a></h2>
+<p>Have you used C++? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.</p>
+<p>So, what is the solution?</p>
+<p>We can use a vector in C++. If we use <code>vector&lt;uint64_t&gt;</code>, then when the integer starts to overflow in <code>v[0]</code>, we can store the extra overflow data in <code>v[1]</code>, and so on. Note that we are storing the digits in reverse order.</p>
+<p>In mathematics, if <code>A</code> is our BigInt and <code>b</code> is our base <code>2^64</code> (the range of values that <code>uint64_t</code> can store is from <code>0</code> to <code>2^64 - 1</code>), then:</p>
+<pre tabindex="0"><code>A = v[0] + v[1]*b + v[2]*(b^2) + ...
+</code></pre><p>Now the question is: how do we implement this in C++?</p>
+<h2 id="implementing-bigint">Implementing BigInt<a hidden class="anchor" aria-hidden="true" href="#implementing-bigint">#</a></h2>
+<p>The first problem we have to tackle is how to store negative integers. Since we are using unsigned integers (<code>uint64_t</code>) inside our vector, we cannot store the sign inside the vector itself. Therefore, we need to store it separately.</p>
+<p>The solution is to create a class for our BigInt:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">bigint</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">bool</span> isPositive;
+</span></span><span style="display:flex;"><span>		vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">uint64_t</span><span style="color:#f92672">&gt;</span> digits;
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// And other code goes here ...
+</span></span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>Note that we use a <code>bool</code> to store the sign since there are only two possible values: <code>+</code> and <code>-</code>.</p>
+<h2 id="implementing-addition">Implementing Addition<a hidden class="anchor" aria-hidden="true" href="#implementing-addition">#</a></h2>
+<p>I am using the book &ldquo;Modern Computer Arithmetic&rdquo; by Richard P. Brent and Paul Zimmermann to learn how computers handle BigInts, and I will implement their algorithms.</p>
+<p>Input:</p>
+<pre tabindex="0"><code>A = va[0] + va[1]*b + va[2]*(b^2) + ...
+B = vb[0] + vb[1]*b + vb[2]*(b^2) + ...
+</code></pre><p>Output:</p>
+<pre tabindex="0"><code>C = vc[0] + vc[1]*b + vc[2]*(b^2) + ...
+</code></pre><p>Algo:</p>
+<pre tabindex="0"><code>d = 0
+s = a[0] + b[0]
+c[0] = s mod b
+d = s / b 
+
+for i: 1 -&gt; n-1
+	s = a[i] + b[i] + d
+	c[i] = s mod b
+	d = s / b
+	
+return c
+</code></pre><p>Note that <code>d = s / b</code>, and <code>d</code> cannot be greater than <code>1</code>, as the maximum value that <code>s</code> can attain is:</p>
+<pre tabindex="0"><code>2*(2^64 - 1) + 1 = 2^65 - 1
+</code></pre><p>Therefore, the carry can only be <code>0</code> or <code>1</code>.</p>
+<h2 id="code">Code<a hidden class="anchor" aria-hidden="true" href="#code">#</a></h2>
+<h3 id="my_stdh">my_std.h<a hidden class="anchor" aria-hidden="true" href="#my_stdh">#</a></h3>
+<pre tabindex="0"><code>// my_std.h
+#pragma once // Prevents this file from being included multiple times
+
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+
+#include &lt;cstdint&gt;
+#include &lt;cstddef&gt;
+
+
+
+// Explicitly bring only what you need into the global space of whoever includes this
+using std::cout;
+using std::cin;
+using std::endl;
+using std::vector;
+using std::string;
+</code></pre><p>This is becouse i dont want to include everthing every time.</p>
+<h3 id="biginthpp">bigint.hpp<a hidden class="anchor" aria-hidden="true" href="#biginthpp">#</a></h3>
+<pre tabindex="0"><code>#pragma once
+
+#include &#34;my_std.h&#34;
+
+class bigint {
+private:
+  bool isPositive = true;
+  // we are user base = uint64_t ( 2^64 )
+  vector&lt;uint64_t&gt; digits;
+  // A = digit[0] + digit[1]*base^1 + ....
+
+  void multiply_add(uint64_t scalar, uint64_t add_value) {
+    unsigned __int128 carry = add_value;
+
+    for (size_t i = 0; i &lt; digits.size(); i++) {
+      unsigned __int128 curr = (unsigned __int128)digits[i] * scalar + carry;
+      digits[i] = (uint64_t)curr;
+      carry = curr &gt;&gt; 64;
+    }
+
+    while (carry &gt; 0) {
+      digits.push_back((uint64_t)carry);
+      carry &gt;&gt;= 64;
+    }
+  }
+
+  uint64_t divide_scalar(uint64_t divisor) {
+    unsigned __int128 carry = 0;
+
+    for (long long i = digits.size() - 1; i &gt;= 0; --i) {
+      unsigned __int128 curr = (carry &lt;&lt; 64) | digits[i];
+      digits[i] = (uint64_t)(curr / divisor);
+      carry = curr % divisor;
+    }
+
+    while (digits.size() &gt; 1 &amp;&amp; digits.back() == 0) {
+      digits.pop_back();
+    }
+
+    return (uint64_t)carry;
+  }
+
+  void zero_check() {
+    if (digits.empty() || (digits.size() == 1 &amp;&amp; digits[0] == 0)) {
+      digits = {0};
+      isPositive = true;
+    }
+  }
+
+public:
+  bool ip() const { return isPositive; }
+
+  void flipSign() { isPositive=!isPositive; }
+
+  const vector&lt;uint64_t&gt;&amp; get_digits() const { return digits;}
+  
+  vector&lt;uint64_t&gt;&amp; get_digit() { return digits;}
+
+
+  bigint(long long val = 0) {
+    if (val &lt; 0) {
+      isPositive = false;
+      val = -val;
+    } else {
+      isPositive = true;
+    }
+
+    digits.push_back((uint64_t)val);
+    zero_check();
+  }
+
+  bigint(const std::string &amp;s) { from_string(s); }
+
+  void from_string(const string &amp;s) {
+    digits.clear();
+    isPositive = true;
+    if (s.empty())
+      return;
+
+    size_t start = 0;
+    if (s[0] == &#39;-&#39;) {
+      isPositive = false;
+      start = 1;
+    } else if (s[0] == &#39;+&#39;) {
+      start = 1;
+    }
+
+    digits.push_back(0);
+
+    for (size_t i = start; i &lt; s.length(); i++) {
+      if (s[i] &lt; &#39;0&#39; || s[i] &gt; &#39;9&#39;)
+        continue;
+      uint64_t digit_val = s[i] - &#39;0&#39;;
+      multiply_add(10, digit_val);
+    }
+    zero_check();
+  }
+
+  string to_string() const {
+    if (digits.empty() || (digits.size() == 1 &amp;&amp; digits[0] == 0)) {
+      return &#34;0&#34;;
+    }
+
+    bigint temp = *this;
+    string result = &#34;&#34;;
+
+    while (!(temp.digits.size() == 1 &amp;&amp; temp.digits[0] == 0)) {
+      uint64_t remainder = temp.divide_scalar(10);
+      result += std::to_string(remainder);
+    }
+
+    if (!isPositive) {
+      result += &#34;-&#34;;
+    }
+
+    reverse(result.begin(), result.end());
+    return result;
+  }
+};
+</code></pre><h3 id="arithmetichpp">arithmetic.hpp<a hidden class="anchor" aria-hidden="true" href="#arithmetichpp">#</a></h3>
+<pre tabindex="0"><code>#pragma once
+
+#include &#34;bigint.hpp&#34;
+
+inline bigint bigint_add(const bigint &amp;a, const bigint &amp;b) {
+  bigint c(0);
+  unsigned __int128 s = a.get_digits()[0] + b.get_digits()[0];
+  c.get_digit()[0] = (uint64_t)s;
+  uint64_t d = (uint64_t)(s &gt;&gt; 64);
+
+  for (size_t i = 0; i &lt; b.get_digits().size(); i++) {
+    s = a.get_digits()[i] + b.get_digits()[i] + d;
+    d = (uint64_t)(s &gt;&gt; 64);
+    c.get_digit().push_back((uint64_t)s);
+  }
+
+  for (size_t i = b.get_digits().size(); i &lt; a.get_digits().size(); i++) {
+    s = a.get_digits()[i] + d;
+    d = (uint64_t)(s &gt;&gt; 64);
+    c.get_digit().push_back((uint64_t)s);
+  }
+
+  if (d)
+    c.get_digit().push_back(d);
+  return c;
+}
+
+inline bigint add(const bigint &amp;a, const bigint &amp;b) {
+  bigint ans;
+  if (a.ip() &amp;&amp; b.ip()) {
+    if (a.get_digits().size() &gt;= b.get_digits().size()) {
+      ans = bigint_add(a, b);
+    } else {
+      ans = bigint_add(b, a);
+    }
+    return ans;
+  } else if (!a.ip() &amp;&amp; !b.ip()) {
+    if (a.get_digits().size() &gt;= b.get_digits().size()) {
+      ans = bigint_add(a, b);
+    } else {
+      ans = bigint_add(b, a);
+    }
+    ans.flipSign();
+    return ans;
+  } else {
+    // TODO:  Implement substract functionality
+    return ans;
+  }
+}
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://Cipher196.github.io/Technical-Blogs/">Technical Blogs</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

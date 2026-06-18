@@ -6,8 +6,18 @@
     <description>Recent content in Posts on Technical Blogs</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 15 Jun 2026 15:35:36 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 11:21:37 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BigInt in C&#43;&#43;: Representation and Addition</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/</link>
+      <pubDate>Thu, 18 Jun 2026 11:21:37 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/</guid>
+      <description>&lt;h2 id=&#34;what-is-bigint&#34;&gt;What is BigInt?&lt;/h2&gt;
+&lt;p&gt;Have you used C++? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.&lt;/p&gt;
+&lt;p&gt;So, what is the solution?&lt;/p&gt;
+&lt;p&gt;We can use a vector in C++. If we use &lt;code&gt;vector&amp;lt;uint64_t&amp;gt;&lt;/code&gt;, then when the integer starts to overflow in &lt;code&gt;v[0]&lt;/code&gt;, we can store the extra overflow data in &lt;code&gt;v[1]&lt;/code&gt;, and so on. Note that we are storing the digits in reverse order.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>My First Post</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/my-first-post/</link>
