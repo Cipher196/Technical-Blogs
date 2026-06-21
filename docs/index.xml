@@ -6,8 +6,23 @@
     <description>Recent content on Technical Blogs</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 18 Jun 2026 11:21:37 +0530</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 18:58:35 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Implementing Subtract and Naive Multiplication</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/implementing-subtract-and-naive-multiplication/</link>
+      <pubDate>Sun, 21 Jun 2026 18:58:35 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/implementing-subtract-and-naive-multiplication/</guid>
+      <description>&lt;h2 id=&#34;implementing-subtraction&#34;&gt;Implementing Subtraction&lt;/h2&gt;
+&lt;p&gt;When I was reading the book, it said:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&amp;ldquo;The subtraction code is very similar. Step 3 simply becomes s ← ai − bi + d,
+where d ∈ {−1, 0} is the borrow of the subtraction&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;But the implementation became too tough for me to handle.&lt;/p&gt;
+&lt;h2 id=&#34;running-into-problems&#34;&gt;Running into Problems&lt;/h2&gt;
+&lt;p&gt;When I started implementing addition, I already needed four functions just to handle the basic logic, and I completely skipped the case where one number is positive and the other is negative.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>BigInt in C&#43;&#43;: Representation and Addition</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/</link>
