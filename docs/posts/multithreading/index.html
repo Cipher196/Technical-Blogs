@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Multithreading | Technical Blogs</title>
+<meta name="keywords" content="">
+<meta name="description" content="What is Multithreading?
+Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, &hellip; core.
+Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.">
+<meta name="author" content="">
+<link rel="canonical" href="https://Cipher196.github.io/Technical-Blogs/posts/multithreading/">
+<link crossorigin="anonymous" href="/Technical-Blogs/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://Cipher196.github.io/Technical-Blogs/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Cipher196.github.io/Technical-Blogs/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Cipher196.github.io/Technical-Blogs/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://Cipher196.github.io/Technical-Blogs/apple-touch-icon.png">
+<link rel="mask-icon" href="https://Cipher196.github.io/Technical-Blogs/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://Cipher196.github.io/Technical-Blogs/posts/multithreading/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/multithreading/">
+  <meta property="og:site_name" content="Technical Blogs">
+  <meta property="og:title" content="Multithreading">
+  <meta property="og:description" content="What is Multithreading? Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, … core.
+Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-24T09:21:39+05:30">
+    <meta property="article:modified_time" content="2026-06-24T09:21:39+05:30">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Multithreading">
+  <meta name="twitter:description" content="What is Multithreading? Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, … core.
+Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Multithreading",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/multithreading/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Multithreading",
+  "name": "Multithreading",
+  "description": "What is Multithreading? Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, \u0026hellip; core.\nNow, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "What is Multithreading? Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, … core.\nNow, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.\nHow to use Multithreading in cpp? To use multithreading in C++, we have to use the C++ standard thread library, which provides threads as classes and thread functionality as class functions.\nYou just need to create a thread class object that takes a C++ function as an input parameter, along with any arguments that the function requires. As soon as the thread class object is created, it starts to run as a separate thread and utilizes parallel computing\n#include void somerandomfunction(){ // do somting } int main(){ thread t1(somerandomfuntion); t1.join(); return 0; } The t1.join() method will make the main thread wait for the t1 thread to finish execution. On the other hand, t1.detach() will free the thread from the C++ runtime, leaving the Operating System (OS) to handle it independently.\nWhat are Mutex? The Problem: Race Condition When two threads t1 and t2 run in parallel and attempt to access a shared variable (int counter = 0), unexpected behavior can occur.\nFor example, if both threads try to increment counter to 100,000, they might interfere with each other:\nAt 1 ms: The counter value is 5,000. Both t1 and t2 read this value simultaneously. Thread 1 (t1): Increments the value from 5,000 to 8,000 in its CPU cycle and writes it back to memory. Thread 2 (t2): Increments its own cached value from 5,000 to 7,000 and writes it back after t1, overwriting t1’s work. The Result: Instead of the sequential updates combining to make the counter 10,000, the final value is incorrectly saved as 7,000.\nThe Solution: Mutex To prevent this data corruption, a Mutex (Mutual Exclusion) lock is used. Let variable (where data is stroed) is room. when you(thread) need change something you first lock the room so that other can’t enter the room untill your work is done.\nyou can also cpp lock_gaurd functionality. It will automatically unlock the room when room goes out of scope.\nMutex vs Atomic Atomic As the name suggests, we say something is atomic if it cannot be further divided into smaller units. In C++, if you declare a variable as atomic, it means all three steps (read -\u003e compute -\u003e write) are combined into a single step that cannot be broken up across different CPU cycles.\nIf t1 reads an atomic variable, t2 cannot even read it until t1 finishes writing its value back.\nDifference A Mutex is a multithreading concept used to prevent race conditions by locking blocks of code, whereas an Atomic variable is a fundamental property given to a specific variable ensuring it performs its entire read-modify-write cycle in a single, uninterrupted operation.\nWhat’s ahead I have already coded matrix multiplication and improved its performance using tiling (blocking) and multithreading. Since this blog post is already getting big, I will explain that implementation in the next one!\nSome Code mutex.cpp #include #include #include using namespace std; int counter=0; mutex mx; void add(){ lock_guard lock(mx); for(int i=0; i\u003c1000000; i++){ counter++; } } int main(){ thread t1(add); thread t2(add); t1.join(); t2.join(); cout\u003c",
+  "wordCount" : "635",
+  "inLanguage": "en",
+  "datePublished": "2026-06-24T09:21:39+05:30",
+  "dateModified": "2026-06-24T09:21:39+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Cipher196.github.io/Technical-Blogs/posts/multithreading/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Technical Blogs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Cipher196.github.io/Technical-Blogs/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://Cipher196.github.io/Technical-Blogs/" accesskey="h" title="Technical Blogs (Alt + H)">Technical Blogs</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Multithreading
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-24 09:21:39 +0530 IST'>June 24, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="what-is-multithreading">What is Multithreading?<a hidden class="anchor" aria-hidden="true" href="#what-is-multithreading">#</a></h2>
+<p>Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, &hellip; core.</p>
+<p>Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.</p>
+<h2 id="how-to-use-multithreading-in-cpp">How to use Multithreading in cpp?<a hidden class="anchor" aria-hidden="true" href="#how-to-use-multithreading-in-cpp">#</a></h2>
+<p>To use multithreading in C++, we have to use the C++ standard thread library, which provides threads as classes and thread functionality as class functions.</p>
+<p>You just need to create a thread class object that takes a C++ function as an input parameter, along with any arguments that the function requires. As soon as the thread class object is created, it starts to run as a separate thread and utilizes parallel computing</p>
+<pre tabindex="0"><code>#include &lt;thread&gt;
+
+void somerandomfunction(){ // do somting }
+
+int main(){
+	thread t1(somerandomfuntion);
+	t1.join();
+	return 0;
+}
+</code></pre><p>The <code>t1.join()</code> method will make the main thread wait for the t1 thread to finish execution. On the other hand, <code>t1.detach()</code> will free the thread from the C++ runtime, leaving the Operating System (OS) to handle it independently.</p>
+<h2 id="what-are-mutex">What are Mutex?<a hidden class="anchor" aria-hidden="true" href="#what-are-mutex">#</a></h2>
+<h3 id="the-problem-race-condition">The Problem: Race Condition<a hidden class="anchor" aria-hidden="true" href="#the-problem-race-condition">#</a></h3>
+<p>When two threads t1 and t2 run in parallel and attempt to access a shared variable (<code>int counter = 0</code>), unexpected behavior can occur.</p>
+<p>For example, if both threads try to increment <code>counter</code> to 100,000, they might interfere with each other:</p>
+<ul>
+<li><strong>At 1 ms:</strong> The <code>counter</code> value is 5,000. Both t1 and t2 read this value simultaneously.</li>
+<li><strong>Thread 1 (t1):</strong> Increments the value from 5,000 to 8,000 in its CPU cycle and writes it back to memory.</li>
+<li><strong>Thread 2 (t2):</strong> Increments its own cached value from 5,000 to 7,000 and writes it back <em>after</em> t1, overwriting t1&rsquo;s work.</li>
+</ul>
+<p><strong>The Result:</strong> Instead of the sequential updates combining to make the counter 10,000, the final value is incorrectly saved as 7,000.</p>
+<hr>
+<h3 id="the-solution-mutex">The Solution: Mutex<a hidden class="anchor" aria-hidden="true" href="#the-solution-mutex">#</a></h3>
+<p>To prevent this data corruption, a <strong>Mutex (Mutual Exclusion)</strong> lock is used. Let variable (where data is stroed) is room. when you(thread) need change something you first lock the room so that other can&rsquo;t enter the room untill your work is done.</p>
+<p>you can also cpp lock_gaurd functionality. It will automatically unlock the room when room goes out of scope.</p>
+<h2 id="mutex-vs-atomic">Mutex vs Atomic<a hidden class="anchor" aria-hidden="true" href="#mutex-vs-atomic">#</a></h2>
+<h3 id="atomic">Atomic<a hidden class="anchor" aria-hidden="true" href="#atomic">#</a></h3>
+<p>As the name suggests, we say something is atomic if it cannot be further divided into smaller units. In C++, if you declare a variable as atomic, it means all three steps (read -&gt; compute -&gt; write) are combined into a single step that cannot be broken up across different CPU cycles.</p>
+<p>If t1 reads an atomic variable, t2 cannot even read it until t1 finishes writing its value back.</p>
+<h3 id="difference">Difference<a hidden class="anchor" aria-hidden="true" href="#difference">#</a></h3>
+<p>A Mutex is a multithreading concept used to prevent race conditions by locking blocks of code, whereas an Atomic variable is a fundamental property given to a specific variable ensuring it performs its entire read-modify-write cycle in a single, uninterrupted operation.</p>
+<h2 id="whats-ahead">What&rsquo;s ahead<a hidden class="anchor" aria-hidden="true" href="#whats-ahead">#</a></h2>
+<p>I have already coded matrix multiplication and improved its performance using tiling (blocking) and multithreading. Since this blog post is already getting big, I will explain that implementation in the next one!</p>
+<h2 id="some-code">Some Code<a hidden class="anchor" aria-hidden="true" href="#some-code">#</a></h2>
+<h4 id="mutexcpp">mutex.cpp<a hidden class="anchor" aria-hidden="true" href="#mutexcpp">#</a></h4>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;mutex&gt;
+
+using namespace std;
+
+int counter=0;
+mutex mx;
+
+void add(){
+  lock_guard&lt;mutex&gt; lock(mx);
+  for(int i=0; i&lt;1000000; i++){
+    counter++;
+  }
+}
+
+int main(){
+  thread t1(add);
+  thread t2(add);
+
+  t1.join();
+  t2.join();
+
+  cout&lt;&lt;counter&lt;&lt;endl;
+  return 0;
+}
+</code></pre><h4 id="atomiccpp">atomic.cpp<a hidden class="anchor" aria-hidden="true" href="#atomiccpp">#</a></h4>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;thread&gt;
+#include &lt;atomic&gt;
+
+using namespace std;
+
+atomic&lt;int&gt; counter(0);
+
+void add(){
+  for(int i=0; i&lt;2000000; i++){
+    counter++;
+  }
+}
+
+int main(){
+  thread t1(add);
+  thread t2(add);
+
+  t1.join();
+  t2.join();
+
+  cout&lt;&lt;counter&lt;&lt;endl;
+  return 0;
+}
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://Cipher196.github.io/Technical-Blogs/">Technical Blogs</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

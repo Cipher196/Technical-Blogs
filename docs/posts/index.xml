@@ -6,8 +6,17 @@
     <description>Recent content in Posts on Technical Blogs</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 21 Jun 2026 18:58:35 +0530</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 09:21:39 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multithreading</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/multithreading/</link>
+      <pubDate>Wed, 24 Jun 2026 09:21:39 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/multithreading/</guid>
+      <description>&lt;h2 id=&#34;what-is-multithreading&#34;&gt;What is Multithreading?&lt;/h2&gt;
+&lt;p&gt;Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, &amp;hellip; core.&lt;/p&gt;
+&lt;p&gt;Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Implementing Subtract and Naive Multiplication</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/implementing-subtract-and-naive-multiplication/</link>
