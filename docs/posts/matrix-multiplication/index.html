@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Matrix Multiplication | Technical Blogs</title>
+<meta name="keywords" content="">
+<meta name="description" content="Why Matrix Multiplication?
+Because it&rsquo;s the most important operation in today&rsquo;s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.
+I tried to find the square (A x A) of a 1000x1000 matrix.
+What is Tiling?
+Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.">
+<meta name="author" content="">
+<link rel="canonical" href="https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/">
+<link crossorigin="anonymous" href="/Technical-Blogs/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://Cipher196.github.io/Technical-Blogs/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Cipher196.github.io/Technical-Blogs/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Cipher196.github.io/Technical-Blogs/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://Cipher196.github.io/Technical-Blogs/apple-touch-icon.png">
+<link rel="mask-icon" href="https://Cipher196.github.io/Technical-Blogs/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/">
+  <meta property="og:site_name" content="Technical Blogs">
+  <meta property="og:title" content="Matrix Multiplication">
+  <meta property="og:description" content="Why Matrix Multiplication? Because it’s the most important operation in today’s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.
+I tried to find the square (A x A) of a 1000x1000 matrix.
+What is Tiling? Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-25T20:59:21+05:30">
+    <meta property="article:modified_time" content="2026-06-25T20:59:21+05:30">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Matrix Multiplication">
+  <meta name="twitter:description" content="Why Matrix Multiplication? Because it’s the most important operation in today’s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.
+I tried to find the square (A x A) of a 1000x1000 matrix.
+What is Tiling? Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Matrix Multiplication",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Matrix Multiplication",
+  "name": "Matrix Multiplication",
+  "description": "Why Matrix Multiplication? Because it\u0026rsquo;s the most important operation in today\u0026rsquo;s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.\nI tried to find the square (A x A) of a 1000x1000 matrix.\nWhat is Tiling? Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Why Matrix Multiplication? Because it’s the most important operation in today’s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.\nI tried to find the square (A x A) of a 1000x1000 matrix.\nWhat is Tiling? Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.\nSuppose you have an n x n matrix. Choose k = n/10 or anything lower than n. Multiply them block by block—the first block of k x n size with another block of k x n size. Choose k such that all the elements of these blocks can easily fit into the L2 cache of the CPU.\nWhat Mistake I Made in Tiling Normally, we use three loops for regular matrix multiplication and six loops for tiling-based matrix multiplication.\nInside the three loops of the tiling method, I used min(ii+sb, n) inside the loop. The mistake is that it computes the minimum every time we compare i with it. This is unnecessary; since it does not depend on i, we can precompute it.\nHow I Used Multithreading For multithreading, I divided the n x n matrix into n/2 x n/2 matrices and created 4 threads to handle all 4 of these blocks.\nResults name of Methord time taken normal matrix multiplication 17.207 Sec with tiling aproch 1 26.407 Sec with tiling aproch 2 14.223 Sec With multithreading name of Methord time taken normal matrix multiplication 5.417 Sec with tiling aproch 1 7.03 Sec with tiling aproch 2 4.88 Sec As we can see we got aprox 3.5x speedup with multithreading (when i used 4 thread).\nResult with -O1 flag Compiler Optimization Flags First of all, it’s not -01 (zero one); it’s -O1 (capital O, one).\nThis flag tells the C++ compiler to optimize the code while compiling. Without it, the compiler uses the default flag -O0 (capital O, zero), which tells the compiler not to optimize it. When using -O0, the code remains exactly as we wrote it, and we can easily set breakpoints for debugging.\nHowever, we cannot easily debug an optimized binary. This is because the compiler changes our code and can remove or add variables, functions, and even loops when we tell it to optimize the code.\nThere are three main levels of optimization: -O1, -O2, and -O3.\nWe are using -O1.\nname of Methord time taken normal matrix multiplication 2.768 Sec with tiling aproch 1 3.684 Sec with tiling aproch 2 0.903 Sec With multithreading name of Methord time taken normal matrix multiplication 1.248 Sec with tiling aproch 1 0.593 Sec with tiling aproch 2 0.527 Sec Code tiling methord without threading #include #include #include #include using namespace std; int n=1000; // size of matrix int k=100; // range of element of matrix 0 to k int bs=64; // block size int main(){ auto start = chrono::high_resolution_clock::now(); vector",
+  "wordCount" : "817",
+  "inLanguage": "en",
+  "datePublished": "2026-06-25T20:59:21+05:30",
+  "dateModified": "2026-06-25T20:59:21+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Technical Blogs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Cipher196.github.io/Technical-Blogs/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://Cipher196.github.io/Technical-Blogs/" accesskey="h" title="Technical Blogs (Alt + H)">Technical Blogs</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Matrix Multiplication
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-25 20:59:21 +0530 IST'>June 25, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="why-matrix-multiplication">Why Matrix Multiplication?<a hidden class="anchor" aria-hidden="true" href="#why-matrix-multiplication">#</a></h2>
+<p>Because it&rsquo;s the most important operation in today&rsquo;s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.</p>
+<p>I tried to find the square (A x A) of a 1000x1000 matrix.</p>
+<h2 id="what-is-tiling">What is Tiling?<a hidden class="anchor" aria-hidden="true" href="#what-is-tiling">#</a></h2>
+<p>Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.</p>
+<p>Suppose you have an n x n matrix. Choose <code>k = n/10</code> or anything lower than <code>n</code>. Multiply them block by block—the first block of <code>k x n</code> size with another block of <code>k x n</code> size. Choose <code>k</code> such that all the elements of these blocks can easily fit into the L2 cache of the CPU.</p>
+<h2 id="what-mistake-i-made-in-tiling">What Mistake I Made in Tiling<a hidden class="anchor" aria-hidden="true" href="#what-mistake-i-made-in-tiling">#</a></h2>
+<p>Normally, we use three loops for regular matrix multiplication and six loops for tiling-based matrix multiplication.</p>
+<p>Inside the three loops of the tiling method, I used <code>min(ii+sb, n)</code> inside the loop. The mistake is that it computes the minimum every time we compare <code>i</code> with it. This is unnecessary; since it does not depend on <code>i</code>, we can precompute it.</p>
+<h2 id="how-i-used-multithreading">How I Used Multithreading<a hidden class="anchor" aria-hidden="true" href="#how-i-used-multithreading">#</a></h2>
+<p>For multithreading, I divided the n x n matrix into n/2 x n/2 matrices and created 4 threads to handle all 4 of these blocks.</p>
+<h2 id="results">Results<a hidden class="anchor" aria-hidden="true" href="#results">#</a></h2>
+<table>
+	<thead>
+			<tr>
+					<th>name of Methord</th>
+					<th>time taken</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>normal matrix multiplication</td>
+					<td>17.207 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 1</td>
+					<td>26.407 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 2</td>
+					<td>14.223 Sec</td>
+			</tr>
+	</tbody>
+</table>
+<h4 id="with-multithreading">With multithreading<a hidden class="anchor" aria-hidden="true" href="#with-multithreading">#</a></h4>
+<table>
+	<thead>
+			<tr>
+					<th>name of Methord</th>
+					<th>time taken</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>normal matrix multiplication</td>
+					<td>5.417 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 1</td>
+					<td>7.03 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 2</td>
+					<td>4.88 Sec</td>
+			</tr>
+	</tbody>
+</table>
+<p>As we can see we got aprox 3.5x speedup with multithreading (when i used 4 thread).</p>
+<h4 id="result-with--o1-flag">Result with -O1 flag<a hidden class="anchor" aria-hidden="true" href="#result-with--o1-flag">#</a></h4>
+<h2 id="compiler-optimization-flags">Compiler Optimization Flags<a hidden class="anchor" aria-hidden="true" href="#compiler-optimization-flags">#</a></h2>
+<p>First of all, it&rsquo;s not <code>-01</code> (zero one); it&rsquo;s <code>-O1</code> (capital O, one).</p>
+<p>This flag tells the C++ compiler to optimize the code while compiling. Without it, the compiler uses the default flag <code>-O0</code> (capital O, zero), which tells the compiler not to optimize it. When using <code>-O0</code>, the code remains exactly as we wrote it, and we can easily set breakpoints for debugging.</p>
+<p>However, we cannot easily debug an optimized binary. This is because the compiler changes our code and can remove or add variables, functions, and even loops when we tell it to optimize the code.</p>
+<p>There are three main levels of optimization: <code>-O1</code>, <code>-O2</code>, and <code>-O3</code>.</p>
+<p>We are using <code>-O1</code>.</p>
+<table>
+	<thead>
+			<tr>
+					<th>name of Methord</th>
+					<th>time taken</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>normal matrix multiplication</td>
+					<td>2.768 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 1</td>
+					<td>3.684 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 2</td>
+					<td>0.903 Sec</td>
+			</tr>
+	</tbody>
+</table>
+<h4 id="with-multithreading-1">With multithreading<a hidden class="anchor" aria-hidden="true" href="#with-multithreading-1">#</a></h4>
+<table>
+	<thead>
+			<tr>
+					<th>name of Methord</th>
+					<th>time taken</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>normal matrix multiplication</td>
+					<td>1.248 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 1</td>
+					<td>0.593 Sec</td>
+			</tr>
+			<tr>
+					<td>with tiling aproch 2</td>
+					<td>0.527 Sec</td>
+			</tr>
+	</tbody>
+</table>
+<h2 id="code">Code<a hidden class="anchor" aria-hidden="true" href="#code">#</a></h2>
+<h4 id="tiling-methord-without-threading">tiling methord without threading<a hidden class="anchor" aria-hidden="true" href="#tiling-methord-without-threading">#</a></h4>
+<pre tabindex="0"><code>#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cstdlib&gt;
+
+using namespace std;
+
+int n=1000; // size of matrix
+int k=100; // range of element of matrix 0 to k 
+int bs=64; // block size
+
+
+int main(){
+  auto start = chrono::high_resolution_clock::now();
+
+  vector&lt;vector&lt;int&gt;&gt; v(n, vector&lt;int&gt; (n));
+
+  for(auto &amp;x: v){
+    for(auto &amp;y: x){
+      y=rand()%k; // so number remain in range 0 to k
+    }
+  }
+
+  vector&lt;vector&lt;int&gt;&gt; a(n, vector&lt;int&gt; (n)); // a = v X v
+
+  for(int ii=0; ii&lt;n; ii+=bs){
+    for(int jj=0; jj&lt;n; jj+=bs){
+      for(int kk=0; kk&lt;n; kk+=bs){
+
+        int im=min(ii+bs,n);
+        int jm=min(jj+bs,n);
+        int km=min(kk+bs,n);
+
+        for(int i=ii; i&lt;im; i++){
+          for(int j=jj; j&lt;jm; j++){
+            int sum=0;
+            for(int k=kk; k&lt;km; k++){
+              sum+=v[i][k]*v[k][j];
+            }
+            a[i][j]=sum;
+          }
+        }
+
+      }
+    }
+  }
+
+  auto end = chrono::high_resolution_clock::now();
+
+  auto ms = chrono::duration_cast&lt;chrono::milliseconds&gt;(end - start).count();
+
+  float time_taken = ms;
+  time_taken/=1000;
+
+  cout&lt;&lt;&#34;Time taken by tiling 2 matrix multiplication: &#34;&lt;&lt;time_taken&lt;&lt;&#34; Sec \n&#34;;
+  return 0;
+}
+</code></pre><h4 id="tiling-with-multithreading">tiling with multithreading<a hidden class="anchor" aria-hidden="true" href="#tiling-with-multithreading">#</a></h4>
+<pre tabindex="0"><code>#include &lt;chrono&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;cstdlib&gt;
+#include &lt;thread&gt;
+
+using namespace std;
+
+int n=1000; // size of matrix
+int k=100; // range of element of matrix 0 to k 
+int bs=64; // block size
+
+void solve(vector&lt;vector&lt;int&gt;&gt; &amp;a, vector&lt;vector&lt;int&gt;&gt; &amp;v, int sr, int er, int sc, int ec){
+  for(int ii=sr; ii&lt;er; ii+=bs){
+    for(int jj=sc; jj&lt;ec; jj+=bs){
+      for(int kk=0; kk&lt;n; kk+=bs){
+
+        int im=min(ii+bs,er);
+        int jm=min(jj+bs,ec);
+        int km=min(kk+bs,n);
+
+        for(int i=ii; i&lt;im; i++){
+          for(int j=jj; j&lt;jm; j++){
+            int sum=0;
+            for(int k=kk; k&lt;km; k++){
+              sum+=v[i][k]*v[k][j];
+            }
+            a[i][j]=sum;
+          }
+        }
+
+
+      }
+    }
+  }
+}
+
+int main(){
+  auto start = chrono::high_resolution_clock::now();
+
+  vector&lt;vector&lt;int&gt;&gt; v(n, vector&lt;int&gt; (n));
+
+  for(auto &amp;x: v){
+    for(auto &amp;y: x){
+      y=rand()%k; // so number remain in range 0 to k
+    }
+  }
+
+  vector&lt;vector&lt;int&gt;&gt; a(n, vector&lt;int&gt; (n)); // a = v X v
+  
+  int mid=n/2;
+
+  thread t1(solve, ref(a), ref(v), 0, mid, 0, mid);
+  thread t2(solve, ref(a), ref(v), 0, mid, mid, n);
+  thread t3(solve, ref(a), ref(v), mid, n, 0, mid);
+  thread t4(solve, ref(a), ref(v), mid, n, mid, n);
+
+  t1.join();
+  t2.join();
+  t3.join();
+  t4.join();
+
+
+  auto end = chrono::high_resolution_clock::now();
+
+  auto ms = chrono::duration_cast&lt;chrono::milliseconds&gt;(end - start).count();
+
+  float time_taken = ms;
+  time_taken/=1000;
+
+  cout&lt;&lt;&#34;Time taken by multi-threaded tiling matrix multiplication: &#34;&lt;&lt;time_taken&lt;&lt;&#34; Sec \n&#34;;
+  return 0;
+}
+</code></pre><p>Other code you can see on github :)</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://Cipher196.github.io/Technical-Blogs/">Technical Blogs</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

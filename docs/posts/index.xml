@@ -6,8 +6,19 @@
     <description>Recent content in Posts on Technical Blogs</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 24 Jun 2026 09:21:39 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 20:59:21 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Matrix Multiplication</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/</link>
+      <pubDate>Thu, 25 Jun 2026 20:59:21 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/</guid>
+      <description>&lt;h2 id=&#34;why-matrix-multiplication&#34;&gt;Why Matrix Multiplication?&lt;/h2&gt;
+&lt;p&gt;Because it&amp;rsquo;s the most important operation in today&amp;rsquo;s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.&lt;/p&gt;
+&lt;p&gt;I tried to find the square (A x A) of a 1000x1000 matrix.&lt;/p&gt;
+&lt;h2 id=&#34;what-is-tiling&#34;&gt;What is Tiling?&lt;/h2&gt;
+&lt;p&gt;Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Multithreading</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/multithreading/</link>
