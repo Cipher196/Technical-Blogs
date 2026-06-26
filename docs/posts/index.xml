@@ -6,8 +6,18 @@
     <description>Recent content in Posts on Technical Blogs</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 25 Jun 2026 20:59:21 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 11:03:02 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Karatsuba</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/</link>
+      <pubDate>Fri, 26 Jun 2026 11:03:02 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/</guid>
+      <description>&lt;h2 id=&#34;idea&#34;&gt;Idea&lt;/h2&gt;
+&lt;p&gt;The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size &lt;code&gt;n&lt;/code&gt; such that if size of integer is less than &lt;code&gt;n&lt;/code&gt; then dividing into half become unnessary. Such &lt;code&gt;n&lt;/code&gt; is known as Karatsuba threshold.&lt;/p&gt;
+&lt;p&gt;Let A and B is bigint of size &lt;code&gt;n&lt;/code&gt; then divide both into two part A0, A1, B0 and B1 each of size &lt;code&gt;k=n/2&lt;/code&gt;.
+and let s = b^k where b is base.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Matrix Multiplication</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/</link>

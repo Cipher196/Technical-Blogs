@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Karatsuba | Technical Blogs</title>
+<meta name="keywords" content="">
+<meta name="description" content="Idea
+The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size n such that if size of integer is less than n then dividing into half become unnessary. Such n is known as Karatsuba threshold.
+Let A and B is bigint of size n then divide both into two part A0, A1, B0 and B1 each of size k=n/2.
+and let s = b^k where b is base.">
+<meta name="author" content="">
+<link rel="canonical" href="https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/">
+<link crossorigin="anonymous" href="/Technical-Blogs/assets/css/stylesheet.cd9298b33628769aa1bc1acebbbfd7aa11ce81dfe03484d479e1907760249a1d.css" integrity="sha256-zZKYszYodpqhvBrOu7/XqhHOgd/gNITUeeGQd2Akmh0=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://Cipher196.github.io/Technical-Blogs/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Cipher196.github.io/Technical-Blogs/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Cipher196.github.io/Technical-Blogs/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://Cipher196.github.io/Technical-Blogs/apple-touch-icon.png">
+<link rel="mask-icon" href="https://Cipher196.github.io/Technical-Blogs/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/">
+  <meta property="og:site_name" content="Technical Blogs">
+  <meta property="og:title" content="Karatsuba">
+  <meta property="og:description" content="Idea The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size n such that if size of integer is less than n then dividing into half become unnessary. Such n is known as Karatsuba threshold.
+Let A and B is bigint of size n then divide both into two part A0, A1, B0 and B1 each of size k=n/2. and let s = b^k where b is base.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-26T11:03:02+05:30">
+    <meta property="article:modified_time" content="2026-06-26T11:03:02+05:30">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Karatsuba">
+  <meta name="twitter:description" content="Idea The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size n such that if size of integer is less than n then dividing into half become unnessary. Such n is known as Karatsuba threshold.
+Let A and B is bigint of size n then divide both into two part A0, A1, B0 and B1 each of size k=n/2. and let s = b^k where b is base.">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Karatsuba",
+      "item": "https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Karatsuba",
+  "name": "Karatsuba",
+  "description": "Idea The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size n such that if size of integer is less than n then dividing into half become unnessary. Such n is known as Karatsuba threshold.\nLet A and B is bigint of size n then divide both into two part A0, A1, B0 and B1 each of size k=n/2. and let s = b^k where b is base.\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "Idea The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size n such that if size of integer is less than n then dividing into half become unnessary. Such n is known as Karatsuba threshold.\nLet A and B is bigint of size n then divide both into two part A0, A1, B0 and B1 each of size k=n/2. and let s = b^k where b is base.\nThen,\nA*B = ( A1*b + A0 )*( B1*b + B0 ) = A1*B1*b^2 + ( A1*B0 + A0*B1 )*b + A0*B0 and (A1-A0)*(B1-B0)=A1*B1 - A1*B0 - A0*B1 + A0*B0 =\u003e A1*B0 + A0*B1 = A1*B1 + A0*B0 - (A1-A0)*(B1-B0) Algorithm if n \u003c n0 then return BasecaseMultiply(A, B) // naive multiplication k ← n/2 (A0, B0) := (A, B) mod β^k (A1 , B1 ) := (A, B) div β^k C0 ← KaratsubaMultiply(A0 , B0 ) C1 ← KaratsubaMultiply(A1 , B1 ) C2 ← KaratsubaMultiply(A0−A1, B0-B1) return C := C0 + (C0 + C1 − C2)*β^k + C1*β^2k . Time Complecity As Our task of multiply is broken into 3 small multiplication of half size and add which cost O(n).\nSo,\nT(n) = 3*T(n/2) + O(n) By Master Therom, first case If f(n) = O( n^(logb(​a)−ϵ) ) for some constant ϵ\u003e0, then: T(n)=Θ( n^logb(​a) ). So T(n) = n^( log2(3) ) = n^1.585 Code karatsuba.hpp #include \"BasecaseMultiply.hpp\" #include \"addition_and_subtraction.hpp\" #include \"bigint.hpp\" inline size_t karatsuba_threshold = 10; inline bigint mod_with_basePower_k(const bigint \u0026a, size_t k) { bigint c(a.get_digits()[0]); for (int i = 1; i \u003c k; i++) { c.get_digit().push_back(a.get_digits()[k]); } return c; } inline bigint div_with_basePower_k(const bigint \u0026a, size_t k) { bigint c(a.get_digits()[k]); for (int i = k + 1; i \u003c a.get_digits().size(); i++) { c.get_digit().push_back(a.get_digits()[k]); } return c; } inline bigint multiply_karatsuba(const bigint \u0026a, const bigint \u0026b) { size_t l = std::max(a.get_digits().size(), b.get_digits().size()); if (l \u003c karatsuba_threshold) return multiply_naive(a, b); size_t k = l / 2; bigint a0 = mod_with_basePower_k(a, k); bigint b0 = mod_with_basePower_k(b, k); bigint a1 = div_with_basePower_k(a, k); bigint b1 = div_with_basePower_k(b, k); bigint c0 = multiply_karatsuba(a0, b0); bigint c1 = multiply_karatsuba(a1, b1); bigint c2 = multiply_karatsuba(subtract(a1, a0), subtract(b1, b0)); bigint c3 = add(c0, c1); c3 = subtract(c3, c2); c3 = shift(c3, k); bigint c4 = shift(c1, 2 * k); c4 = add(c3, c4); c4 = add(c4, c0); return c4; } Ohter code is avilable on git hub\n",
+  "wordCount" : "404",
+  "inLanguage": "en",
+  "datePublished": "2026-06-26T11:03:02+05:30",
+  "dateModified": "2026-06-26T11:03:02+05:30",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Technical Blogs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Cipher196.github.io/Technical-Blogs/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="header-nav">
+        <div class="logo">
+            <a href="https://Cipher196.github.io/Technical-Blogs/" accesskey="h" title="Technical Blogs (Alt + H)">Technical Blogs</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" class="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu" class="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Karatsuba
+    </h1>
+    <div class="post-meta">
+
+<span title='2026-06-26 11:03:02 +0530 IST'>June 26, 2026</span>
+
+</div>
+  </header> 
+  <div class="post-content md-content"><h2 id="idea">Idea<a hidden class="anchor" aria-hidden="true" href="#idea">#</a></h2>
+<p>The main idea of this Algo is Divide and Concure. We divide big integer into half so that multiplication become easy. We choose a size <code>n</code> such that if size of integer is less than <code>n</code> then dividing into half become unnessary. Such <code>n</code> is known as Karatsuba threshold.</p>
+<p>Let A and B is bigint of size <code>n</code> then divide both into two part A0, A1, B0 and B1 each of size <code>k=n/2</code>.
+and let s = b^k where b is base.</p>
+<p>Then,</p>
+<pre tabindex="0"><code> A*B = ( A1*b + A0 )*( B1*b + B0 ) = A1*B1*b^2 + ( A1*B0 + A0*B1 )*b + A0*B0
+ 
+ and 
+ 
+ (A1-A0)*(B1-B0)=A1*B1 - A1*B0 - A0*B1 + A0*B0
+ 
+ =&gt; A1*B0 + A0*B1 = A1*B1 + A0*B0 - (A1-A0)*(B1-B0)
+</code></pre><h2 id="algorithm">Algorithm<a hidden class="anchor" aria-hidden="true" href="#algorithm">#</a></h2>
+<pre tabindex="0"><code>if n &lt; n0 then return BasecaseMultiply(A, B) // naive multiplication
+
+k ← n/2
+
+(A0, B0) := (A, B) mod β^k
+(A1 , B1 ) := (A, B) div β^k
+
+C0 ← KaratsubaMultiply(A0 , B0 )
+C1 ← KaratsubaMultiply(A1 , B1 )
+C2 ← KaratsubaMultiply(A0−A1, B0-B1)
+
+return C := C0 + (C0 + C1 − C2)*β^k + C1*β^2k .
+</code></pre><h2 id="time-complecity">Time Complecity<a hidden class="anchor" aria-hidden="true" href="#time-complecity">#</a></h2>
+<p>As Our task of multiply is broken into 3 small multiplication of half size and add which cost O(n).</p>
+<p>So,</p>
+<pre tabindex="0"><code> T(n) = 3*T(n/2) + O(n)
+ 
+ By Master Therom, first case 
+ 
+ If f(n) = O( n^(logb(​a)−ϵ) ) for some constant ϵ&gt;0, then: T(n)=Θ( n^logb(​a) ).
+ 
+ So T(n) = n^( log2(3) ) = n^1.585
+ 
+</code></pre><h2 id="code">Code<a hidden class="anchor" aria-hidden="true" href="#code">#</a></h2>
+<h4 id="karatsubahpp">karatsuba.hpp<a hidden class="anchor" aria-hidden="true" href="#karatsubahpp">#</a></h4>
+<pre tabindex="0"><code>#include &#34;BasecaseMultiply.hpp&#34;
+#include &#34;addition_and_subtraction.hpp&#34;
+#include &#34;bigint.hpp&#34;
+
+inline size_t karatsuba_threshold = 10;
+
+inline bigint mod_with_basePower_k(const bigint &amp;a, size_t k) {
+  bigint c(a.get_digits()[0]);
+  for (int i = 1; i &lt; k; i++) {
+    c.get_digit().push_back(a.get_digits()[k]);
+  }
+  return c;
+}
+
+inline bigint div_with_basePower_k(const bigint &amp;a, size_t k) {
+  bigint c(a.get_digits()[k]);
+  for (int i = k + 1; i &lt; a.get_digits().size(); i++) {
+    c.get_digit().push_back(a.get_digits()[k]);
+  }
+  return c;
+}
+
+inline bigint multiply_karatsuba(const bigint &amp;a, const bigint &amp;b) {
+  size_t l = std::max(a.get_digits().size(), b.get_digits().size());
+  if (l &lt; karatsuba_threshold)
+    return multiply_naive(a, b);
+
+  size_t k = l / 2;
+
+  bigint a0 = mod_with_basePower_k(a, k);
+  bigint b0 = mod_with_basePower_k(b, k);
+
+  bigint a1 = div_with_basePower_k(a, k);
+  bigint b1 = div_with_basePower_k(b, k);
+
+  bigint c0 = multiply_karatsuba(a0, b0);
+  bigint c1 = multiply_karatsuba(a1, b1);
+  bigint c2 = multiply_karatsuba(subtract(a1, a0), subtract(b1, b0));
+
+  bigint c3 = add(c0, c1);
+  c3 = subtract(c3, c2);
+  c3 = shift(c3, k);
+
+  bigint c4 = shift(c1, 2 * k);
+  c4 = add(c3, c4);
+  c4 = add(c4, c0);
+
+  return c4;
+}
+</code></pre><p>Ohter code is avilable on <a href="https://github.com/Cipher196/cpp-deep-dive/tree/main/bigint">git hub</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="https://Cipher196.github.io/Technical-Blogs/">Technical Blogs</a></span> · 
+
+    
+    
+    <span>
+        Powered by
+        <a href="https://gohugo.io/?utm_source=papermod" rel="noopener" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var toplink = document.getElementById("top-link");
+    window.onscroll = function () {
+        const scrollThreshold = window.innerHeight;
+        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
+            toplink.classList.remove("hidden");
+        } else {
+            toplink.classList.add("hidden");
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
