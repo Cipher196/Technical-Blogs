@@ -1,10 +1,25 @@
 baseURL: "https://Cipher196.github.io/Technical-Blogs/"
-local: "en-us"
+languageCode: "en-us"
 title: "Technical Blogs"
 theme: "PaperMod"
 publishDir: "docs"
 
 params:
+  math: true
   homeInfoParams:
     Title: "Ahshan Khan"
     Content: "Hey! I am currently doing B.Tech. in Math and Computing."
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - ["\\[", "\\]"]
+            - ["$$", "$$"]
+          inline:
+            - ["\\(", "\\)"]
+            - ["$", "$"]
+

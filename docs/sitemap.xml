@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/</loc>
-    <lastmod>2026-06-26T11:03:02+05:30</lastmod>
-  </url><url>
     <loc>https://Cipher196.github.io/Technical-Blogs/posts/</loc>
-    <lastmod>2026-06-26T11:03:02+05:30</lastmod>
+    <lastmod>2026-06-29T19:37:28+05:30</lastmod>
   </url><url>
     <loc>https://Cipher196.github.io/Technical-Blogs/</loc>
+    <lastmod>2026-06-29T19:37:28+05:30</lastmod>
+  </url><url>
+    <loc>https://Cipher196.github.io/Technical-Blogs/posts/toom-cook/</loc>
+    <lastmod>2026-06-29T19:37:28+05:30</lastmod>
+  </url><url>
+    <loc>https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/</loc>
     <lastmod>2026-06-26T11:03:02+05:30</lastmod>
   </url><url>
     <loc>https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/</loc>

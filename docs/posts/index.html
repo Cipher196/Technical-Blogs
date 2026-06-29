@@ -65,10 +65,27 @@
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/">
+</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError : false
+        });"></script>
+
+
+<meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/">
   <meta property="og:site_name" content="Technical Blogs">
   <meta property="og:title" content="Posts">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
   <meta name="twitter:card" content="summary">
@@ -128,6 +145,27 @@
     Posts
   </h1>
 </header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Toom Cook
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Idea Schoolbook multiplication take $\mathcal{O}(n^2)$ and Karatsuba decrease it to $\mathcal{O}(n^{\log_23})$.
+In karatsuba we divide our bigint into 2 parts, Now One may ask what if we divide bigint into 3 parts? Will it give better complexity? Answer is Yes.
+In n-way Toom Cook we divide our bigint in n parts. Hence karatsuba is just 2-way Toom Cook.
+Maths Algorithm 1.4 ToomCook3
+Input: Two integers $0 \le A, B &lt; \beta^n$
+Output: $A \cdot B := c_0 &#43; c_1\beta^k &#43; c_2\beta^{2k} &#43; c_3\beta^{3k} &#43; c_4\beta^{4k}$ with $k = \lceil n/3 \rceil$
+Require: A threshold $n_1 \ge 3$
+...</p>
+  </div>
+  <footer class="entry-footer">
+
+<span title='2026-06-29 19:37:28 +0530 IST'>June 29, 2026</span></footer>
+  <a class="entry-link" aria-label="post link to Toom Cook" href="https://Cipher196.github.io/Technical-Blogs/posts/toom-cook/"></a>
+</article>
 
 <article class="post-entry"> 
   <header class="entry-header">

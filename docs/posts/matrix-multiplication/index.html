@@ -68,13 +68,30 @@ Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as 
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/">
+</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError : false
+        });"></script>
+
+
+<meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/matrix-multiplication/">
   <meta property="og:site_name" content="Technical Blogs">
   <meta property="og:title" content="Matrix Multiplication">
   <meta property="og:description" content="Why Matrix Multiplication? Because it’s the most important operation in today’s world. All of AI and LLMs run because of matrix multiplication. Optimizing it is an extremely important task, so give it a try.
 I tried to find the square (A x A) of a 1000x1000 matrix.
 What is Tiling? Tiling or blocking is just an approach to use the L1 and L2 cache in the CPU as much as we can. In my code, I broke the rows and columns into different blocks and multiplied them together.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-06-25T20:59:21+05:30">

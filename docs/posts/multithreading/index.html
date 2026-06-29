@@ -66,12 +66,29 @@ Now, What is core? core is compleate cpu unit on its own. Means it can completat
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/multithreading/">
+</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError : false
+        });"></script>
+
+
+<meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/multithreading/">
   <meta property="og:site_name" content="Technical Blogs">
   <meta property="og:title" content="Multithreading">
   <meta property="og:description" content="What is Multithreading? Morden Computers has at least 4 core and some high end proccessor has 16, 32, 64, … core.
 Now, What is core? core is compleate cpu unit on its own. Means it can completate computation on its own like getting data from memory to chache and computing using ALU. When we write general cpp code (without using thread libaray) , it remain single threaded means it use only one core. But if we divide our code and run on diffrent core it compute in parralel and give better performance.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-06-24T09:21:39+05:30">

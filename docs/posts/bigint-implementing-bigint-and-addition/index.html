@@ -67,13 +67,30 @@ We can use a vector in C&#43;&#43;. If we use vector&lt;uint64_t&gt;, then when 
         document.querySelector("html").dataset.theme = 'light';
     }
 
-</script><meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/">
+</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '\\[', right: '\\]', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError : false
+        });"></script>
+
+
+<meta property="og:url" content="https://Cipher196.github.io/Technical-Blogs/posts/bigint-implementing-bigint-and-addition/">
   <meta property="og:site_name" content="Technical Blogs">
   <meta property="og:title" content="BigInt in C&#43;&#43;: Representation and Addition">
   <meta property="og:description" content="What is BigInt? Have you used C&#43;&#43;? There, we have to specify the size of the integer we are going to use. It can be 32-bit, 64-bit, or 128-bit. However, the problem is that the size is fixed, and we cannot go beyond that limit.
 So, what is the solution?
 We can use a vector in C&#43;&#43;. If we use vector&lt;uint64_t&gt;, then when the integer starts to overflow in v[0], we can store the extra overflow data in v[1], and so on. Note that we are storing the digits in reverse order.">
-  <meta property="og:locale" content="en">
+  <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2026-06-18T11:21:37+05:30">

@@ -5,9 +5,24 @@
     <link>https://Cipher196.github.io/Technical-Blogs/</link>
     <description>Recent content on Technical Blogs</description>
     <generator>Hugo</generator>
-    <language>en</language>
-    <lastBuildDate>Fri, 26 Jun 2026 11:03:02 +0530</lastBuildDate>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 29 Jun 2026 19:37:28 +0530</lastBuildDate>
     <atom:link href="https://Cipher196.github.io/Technical-Blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Toom Cook</title>
+      <link>https://Cipher196.github.io/Technical-Blogs/posts/toom-cook/</link>
+      <pubDate>Mon, 29 Jun 2026 19:37:28 +0530</pubDate>
+      <guid>https://Cipher196.github.io/Technical-Blogs/posts/toom-cook/</guid>
+      <description>&lt;h2 id=&#34;idea&#34;&gt;Idea&lt;/h2&gt;
+&lt;p&gt;Schoolbook multiplication take $\mathcal{O}(n^2)$ and Karatsuba decrease it to $\mathcal{O}(n^{\log_23})$.&lt;/p&gt;
+&lt;p&gt;In karatsuba we divide our bigint into 2 parts, Now One may ask what if we divide bigint into 3 parts? Will it give better complexity? Answer is Yes.&lt;/p&gt;
+&lt;p&gt;In n-way Toom Cook we divide our bigint in n parts. Hence karatsuba is just 2-way Toom Cook.&lt;/p&gt;
+&lt;h2 id=&#34;maths&#34;&gt;Maths&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Algorithm 1.4&lt;/strong&gt; ToomCook3&lt;br&gt;
+&lt;strong&gt;Input:&lt;/strong&gt; Two integers $0 \le A, B &lt; \beta^n$&lt;br&gt;
+&lt;strong&gt;Output:&lt;/strong&gt; $A \cdot B := c_0 + c_1\beta^k + c_2\beta^{2k} + c_3\beta^{3k} + c_4\beta^{4k}$ with $k = \lceil n/3 \rceil$&lt;br&gt;
+&lt;strong&gt;Require:&lt;/strong&gt; A threshold $n_1 \ge 3$&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Karatsuba</title>
       <link>https://Cipher196.github.io/Technical-Blogs/posts/karatsuba/</link>
